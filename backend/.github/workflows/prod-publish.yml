@@ -1,0 +1,60 @@
+name: ProdPublish
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  build-and-deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish --configuration Release --no-build --output ./publish
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Prepare deployment package
+        run: |
+          mkdir -p deployment-package
+          cp -r publish/* deployment-package/
+          cp appspec.yml deployment-package/
+          cp -r scripts deployment-package/
+
+      - name: Zip artifacts
+        run: zip -r code-deploy-artifacts.zip deployment-package
+
+      - name: Upload artifacts to Amazon S3
+        run: aws s3 cp code-deploy-artifacts.zip s3://faireez-s3-deploy-bucket/code-deploy-artifacts/
+
+      - name: Deploy to EC2 using AWS CodeDeploy
+        run: |
+          aws deploy create-deployment \
+            --application-name Faireez \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name Faireez-deployment-group \
+            --s3-location bucket=faireez-s3-deploy-bucket,bundleType=zip,key=code-deploy-artifacts/code-deploy-artifacts.zip \
+            --file-exists-behavior OVERWRITE

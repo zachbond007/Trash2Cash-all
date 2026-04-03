@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>913857544936-qd51ra3rpms6vs67gfdept0c1asllp8r.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.913857544936-qd51ra3rpms6vs67gfdept0c1asllp8r</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>913857544936-eui4bbj8no7gganr3vt78gpbvb82j9f2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAXZxC2GlUWMj3oHOBrjEVt1Gk9o8ei80M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>913857544936</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.trash2cashapp</string>
+	<key>PROJECT_ID</key>
+	<string>trash2cash-24d86</string>
+	<key>STORAGE_BUCKET</key>
+	<string>trash2cash-24d86.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:913857544936:ios:f5ea312a4883d61f937f5d</string>
+</dict>
+</plist>

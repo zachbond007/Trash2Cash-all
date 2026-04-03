@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "913857544936",
+    "project_id": "trash2cash-24d86",
+    "storage_bucket": "trash2cash-24d86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913857544936:android:908a0ea9f23358e4937f5d",
+        "android_client_info": {
+          "package_name": "com.trash2cashapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913857544936-eui4bbj8no7gganr3vt78gpbvb82j9f2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trash2cashapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "913857544936-cdvsq2649sjh8fjm98rbbfjeufos7gf5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO1q0PUbabG6Puvz7crMuE76_x169F6q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913857544936-cdvsq2649sjh8fjm98rbbfjeufos7gf5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "913857544936-qd51ra3rpms6vs67gfdept0c1asllp8r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.trash2cashapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

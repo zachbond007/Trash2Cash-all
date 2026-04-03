@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>trash2cash_backend</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.103.45" />
+    <PackageReference Include="AWSSDK.Transfer" Version="3.7.104.64" />
+    <PackageReference Include="BCrypt" Version="1.0.0" />
+    <PackageReference Include="BCrypt.Net" Version="0.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.28.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="AWSSDK.S3" />
+    <None Remove="AWSSDK.Transfer" />
+    <None Remove="BCrypt" />
+    <None Remove="BCrypt.Net" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <None Remove="System.IdentityModel.Tokens.Jwt" />
+    <None Remove="Models\Hunts\" />
+    <None Remove="Models\Config\" />
+    <None Remove="Models\HuntVerifications\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Models\Vouchers\" />
+    <None Remove="Models\VoucherLocations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Hunts\" />
+    <Folder Include="Models\Config\" />
+    <Folder Include="Models\HuntVerifications\" />
+    <Folder Include="Models\Vouchers\" />
+    <Folder Include="Models\VoucherLocations\" />
+  </ItemGroup>
+</Project>
