@@ -87,6 +87,8 @@ app.UseAuthorization();
     app.UseMiddleware<JwtMiddleware>();
 
     app.MapControllers();
+    app.MapGet("/health", () => Results.Ok(new { status = "ok", timestamp = DateTime.UtcNow }));
+
 }
 app.Run();
 
