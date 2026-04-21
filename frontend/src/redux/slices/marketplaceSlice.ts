@@ -13,7 +13,7 @@ interface MarketplaceState {
   onlineVouchers: MarketplaceVoucher[];
 }
 const initialState: MarketplaceState = {
-  tabBehaviour: null,
+  tabBehaviour: 'LOCAL',
   isMarketplaceScreen: false,
   selectedCategory: null,
   localVouchers: [],
