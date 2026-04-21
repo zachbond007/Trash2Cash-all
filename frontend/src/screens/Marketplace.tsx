@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import {useAppDispatch, useAppSelector} from '../redux/store';
 import MarketplaceVoucherCard from '../components/MarketplaceVoucherCard';
 import {MarketplaceVoucher} from '../types';
-import {getLocalVouchersForMarketPlace} from '../api/voucher';
+import {getLocalVouchersForMarketPlace, getAllLocalVouchers} from '../api/voucher';
 import {
   setLocalVouchers,
   setOnlineVouchers,
@@ -90,12 +90,18 @@ const Marketplace = () => {
           },
           error => {
             console.log('Location error:', error);
+            getAllLocalVouchers().then(result => {
+              if (result?.length > 0) {
+                dispatch(setLocalVouchers(result));
+              }
+            });
             timingAnimation(loaderOpacity, 0, 500, 0, () => {
               setIsLoading(false);
             });
-          },
+           },
           {timeout: 5000},
         );
+
       } else {
         timingAnimation(loaderOpacity, 0, 500, 0, () => {
           setIsLoading(false);
@@ -199,19 +205,10 @@ const Marketplace = () => {
           footerHeight={50}
           renderHeader={() => null}
         />
-      ) : (
-        <FlatList
-          data={onlineCategories}
-          renderItem={renderCategory}
-          contentContainerStyle={[
-            styles.onlineCategoriesContainer,
-            tabBehaviour && isMarketplaceScreen && {paddingTop: 46},
-          ]}
-          style={{marginBottom: -insets.bottom, marginHorizontal: 8}}
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+            ) : (
+              <View />
+            )}
+
       {selectedVoucher && (
         <OfferModal
           isVisible={isOfferDetailsModalVisible}

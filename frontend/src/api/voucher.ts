@@ -36,3 +36,11 @@ export const getLocalVouchersForMarketPlace = async (
   const result = await post(url, req, jwtToken);
   return result.data as VoucherData[];
 };
+
+export const getAllLocalVouchers = async (): Promise<VoucherData[]> => {
+  const jwtToken = await AsyncStorage.getItem('jwtToken');
+  const url = baseUrl + 'getVouchersForMarketPlace';
+  const result = await get(url, jwtToken);
+  return result.data as VoucherData[];
+};
+
