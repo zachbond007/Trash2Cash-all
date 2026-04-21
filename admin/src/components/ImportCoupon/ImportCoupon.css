@@ -1,0 +1,79 @@
+@import url(https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css);
+
+.main-container {
+  align-items: center;
+  justify-content: center;
+}
+.card {
+  border-radius: 6px;
+  font-size: 14px;
+  /* margin-inline: 3vw; */
+  margin-block: 3vh;
+  max-height: 80vh;
+}
+
+.table-container {
+  max-height: 80vh; 
+  overflow-y: auto; 
+}
+
+.table-container::-webkit-scrollbar {
+  display: none;
+}
+
+.table-header-box {
+  position: sticky;
+  top: 0;
+  background-color: #027F8E;
+  color: white;
+}
+
+.category-button {
+  display: inline-block;
+  padding: 6px 6px;
+  margin-bottom: 6px;
+  margin-right: 6px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 4px;
+  box-shadow: 0.2px 0.2px 4px #00000038;
+}
+
+.level-button {
+    display: inline-block;
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    margin-right: 6px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 4px;
+    box-shadow: 0.2px 0.2px 4px #00000038;
+}
+.selected {
+  background-color: #027F8E;
+  color: white;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-button-title {
+  font-size: 20px;
+  color: white;
+  padding-inline: 32px;
+  padding-block: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #027F8E;
+  user-select: none;
+}
+
+.submit-button-container:active {
+ opacity: 0.7;
+}
