@@ -75,18 +75,27 @@ const Marketplace = () => {
       const _locationPermissionGranted = await checkLocationPermissions();
       if (_locationPermissionGranted) {
         setLocationPermissionGranted(true);
-        Geolocation.getCurrentPosition(async res => {
-          const result = await getLocalVouchersForMarketPlace({
-            lat: res.coords.latitude,
-            lng: res.coords.longitude,
-          });
-          if (result?.length > 0) {
-            dispatch(setLocalVouchers(result));
-          }
-          timingAnimation(loaderOpacity, 0, 500, 0, () => {
-            setIsLoading(false);
-          });
-        });
+        Geolocation.getCurrentPosition(
+  	  async res => {
+    	    const result = await getLocalVouchersForMarketPlace({
+              lat: res.coords.latitude,
+              lng: res.coords.longitude,
+            });
+            if (result?.length > 0) {
+              dispatch(setLocalVouchers(result));
+            }
+            timingAnimation(loaderOpacity, 0, 500, 0, () => {
+             setIsLoading(false);
+            });
+          },
+          error => {
+            console.log('Location error:', error);
+            timingAnimation(loaderOpacity, 0, 500, 0, () => {
+              setIsLoading(false);
+            });
+          },
+          {timeout: 5000},
+        );
       } else {
         timingAnimation(loaderOpacity, 0, 500, 0, () => {
           setIsLoading(false);
