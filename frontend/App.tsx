@@ -14,22 +14,25 @@ import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 
-appsFlyer.initSdk(
-  {
-    devKey: APPFLYER_DEV_KEY,
-    isDebug: false,
-    appId: IOS_APP_ID,
-    onInstallConversionDataListener: false, //Optional
-    onDeepLinkListener: true, //Optional
-    timeToWaitForATTUserAuthorization: 10, //for iOS 14.5
-  },
-  result => {
-    console.log(result);
-  },
-  error => {
-    console.error(error);
-  },
-);
+if (APPFLYER_DEV_KEY) {
+  appsFlyer.initSdk(
+    {
+      devKey: APPFLYER_DEV_KEY,
+      isDebug: false,
+      appId: IOS_APP_ID,
+      onInstallConversionDataListener: false,
+      onDeepLinkListener: true,
+      timeToWaitForATTUserAuthorization: 10,
+    },
+    result => {
+      console.log(result);
+    },
+    error => {
+      console.error(error);
+    },
+  );
+}
+
 const App = () => {
   // AsyncStorage.clear();
   useEffect(() => {

@@ -38,8 +38,10 @@ const Loading = () => {
     // FastImage.clearDiskCache();
     // FastImage.clearMemoryCache();
     const prepareData = async () => {
+      console.log('DEBUG: prepareData started');
       try {
         const configData = await fetchConfigData();
+        console.log('DEBUG: configData =', JSON.stringify(configData));
         if (configData) {
           const imageUris = configData.merchantImageUris;
           const imagesToPreload =
@@ -48,9 +50,14 @@ const Loading = () => {
             imageUris.map((x: string) => {
               return {uri: `${s3BaseUrl}${x}`};
             });
+          if (imagesToPreload && imagesToPreload.length > 0) {
           FastImage.preload(imagesToPreload);
+          }
+          console.log('DEBUG: past FastImage');
           dispatch(setRewardXp(configData.verificationRewardXP));
           const token = await AsyncStorage.getItem('jwtToken');
+          console.log('DEBUG: token =', token);
+
           if (token) {
             const result = await fetchUserData();
             if (result) {

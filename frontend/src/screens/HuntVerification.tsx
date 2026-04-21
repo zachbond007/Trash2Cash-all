@@ -310,6 +310,12 @@ const HuntVerification = () => {
   };
 
   const noHuntExists = verificationHunts.length === 0;
+  useEffect(() => {
+    if (!isHuntImagesLoading && noHuntExists) {
+      timingAnimation(noHuntWrapperOpacity, 1, 500);
+    }
+  }, [isHuntImagesLoading, noHuntExists]);
+
   const onLoadStart = () => {
     if (noHuntExists) {
       timingAnimation(noHuntWrapperOpacity, 1, 500);
@@ -333,7 +339,8 @@ const HuntVerification = () => {
           </Animated.View>
         )}
 
-        <Swiper
+        {!noHuntExists && <Swiper
+  	  ref={swiperRef}
           ref={swiperRef}
           cards={swiperData()}
           cardIndex={currentCardIndex}
@@ -379,7 +386,7 @@ const HuntVerification = () => {
           stackScale={-3}
           stackAnimationFriction={120}
           stackAnimationTension={0}
-        />
+        />}
 
         {!isTutorial && noHuntExists && (
           <Animated.View
