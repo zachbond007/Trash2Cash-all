@@ -93,11 +93,6 @@ public class MerchantService : IMerchantService
         await _dbContext.SaveChangesAsync();
     }
 
-        catch (Exception ex)
-        {
-
-        }
-    }
 
     public async Task DeleteMerchantAsync(int id)
     {
