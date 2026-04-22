@@ -126,36 +126,47 @@ const OfferModal = ({
     if (isLocalTab) {
       setIsLoading(true);
       timingAnimation(loaderOpacity, 1, 500);
-      Geolocation.getCurrentPosition(async res => {
-        const isInRadiusPromises = nearestLocations.map(async location => {
-          const {lat, lng} = location;
-          return isInRadius(lat, lng);
-        });
-        const isInRadiusResults = await Promise.all(isInRadiusPromises);
-        const _isInRadius = isInRadiusResults.includes(true);
-        timingAnimation(loaderOpacity, 0, 500, 0, async () => {
-          setIsLoading(false);
-          if (_isInRadius) {
-            const isExpiredOrNewClaim = await prepareClaims();
-            if (isExpiredOrNewClaim) {
-              await addClaim({
-                userId: user!.id,
-                voucherId: selectedVoucher.voucher.id,
-              });
+      Geolocation.getCurrentPosition(
+        async res => {
+          const isInRadiusPromises = nearestLocations.map(async location => {
+            const {lat, lng} = location;
+            return isInRadius(lat, lng);
+          });
+          const isInRadiusResults = await Promise.all(isInRadiusPromises);
+          const _isInRadius = isInRadiusResults.includes(true);
+          timingAnimation(loaderOpacity, 0, 500, 0, async () => {
+            setIsLoading(false);
+            if (_isInRadius) {
+              const isExpiredOrNewClaim = await prepareClaims();
+              if (isExpiredOrNewClaim) {
+                await addClaim({
+                  userId: user!.id,
+                  voucherId: selectedVoucher.voucher.id,
+                });
+              }
+              onCloseModal();
+              setTriggeredByClaimButton(true);
+            } else {
+              dispatch(
+                updateNearestLocations({
+                  lat: res.coords.latitude,
+                  lng: res.coords.longitude,
+                }),
+              );
+              setIsReminderModalVisible(true);
             }
-            onCloseModal();
-            setTriggeredByClaimButton(true);
-          } else {
-            dispatch(
-              updateNearestLocations({
-                lat: res.coords.latitude,
-                lng: res.coords.longitude,
-              }),
-            );
+          });
+        },
+        _error => {
+          timingAnimation(loaderOpacity, 0, 500, 0, () => {
+            setIsLoading(false);
             setIsReminderModalVisible(true);
-          }
-        });
-      });
+          });
+        },
+        {timeout: 5000},
+      );
+
+
     } else {
       if (selectedVoucher.voucher.code) {
         Toast.show({

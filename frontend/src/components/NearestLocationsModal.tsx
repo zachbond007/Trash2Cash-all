@@ -32,14 +32,19 @@ const NearestLocationsModal = ({
 
   useEffect(() => {
     if (isVisible) {
-      Geolocation.getCurrentPosition(res => {
-        dispatch(
-          updateNearestLocations({
-            lat: res.coords.latitude,
-            lng: res.coords.longitude,
-          }),
-        );
-      });
+      Geolocation.getCurrentPosition(
+        res => {
+          dispatch(
+            updateNearestLocations({
+              lat: res.coords.latitude,
+              lng: res.coords.longitude,
+            }),
+          );
+        },
+        _error => {},
+        {timeout: 5000},
+      );
+
     }
   }, [isVisible]);
 
