@@ -77,22 +77,22 @@ public class MerchantService : IMerchantService
 
     public async Task UpdateMerchantAsync(Merchant merchant, bool updateImage)
     {
-        try
+        var merchantToUpdate = await _dbContext.Merchants.FindAsync(merchant.Id);
+        if (merchantToUpdate == null) throw new Exception($"Merchant {merchant.Id} not found");
+        merchantToUpdate.Name = merchant.Name;
+        merchantToUpdate.ContactEmail = merchant.ContactEmail;
+        merchantToUpdate.ContactName = merchant.ContactName;
+        merchantToUpdate.ContactPhone = merchant.ContactPhone;
+        merchantToUpdate.Color = merchant.Color;
+        merchantToUpdate.IsActive = merchant.IsActive;
+        if (updateImage)
         {
-            var merchantToUpdate = await _dbContext.Merchants.FindAsync(merchant.Id);
-            merchantToUpdate.Name = merchant.Name;
-            merchantToUpdate.ContactEmail = merchant.ContactEmail;
-            merchantToUpdate.ContactName = merchant.ContactName;
-            merchantToUpdate.ContactPhone = merchant.ContactPhone;
-            merchantToUpdate.Color = merchant.Color;
-            merchantToUpdate.IsActive = merchant.IsActive;
-            if (updateImage)
-            {
-                merchantToUpdate.ImageKey = merchant.ImageKey;
-            }
-            _dbContext.Merchants.Update(merchantToUpdate);
-            await _dbContext.SaveChangesAsync();
+            merchantToUpdate.ImageKey = merchant.ImageKey;
         }
+        _dbContext.Merchants.Update(merchantToUpdate);
+        await _dbContext.SaveChangesAsync();
+    }
+
         catch (Exception ex)
         {
 
