@@ -18,12 +18,13 @@ export const post = async (
   }
   await Axios.post(url, parameters, {
     headers: headers,
+    timeout: 10000,
   })
     .then(response => {
       res = response;
     })
     .catch(err => {
-      res = err.response.data;
+      res = err.response ?? {data: null};
     });
   return res;
 };
@@ -38,12 +39,13 @@ export const get = async (
   }
   await Axios.get(url, {
     headers: headers,
+    timeout: 10000,
   })
     .then((response: any) => {
       res = response;
     })
     .catch(err => {
-      res = err.response;
+      res = err.response ?? {data: null};
     });
   return res;
 };
