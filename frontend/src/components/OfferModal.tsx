@@ -190,7 +190,9 @@ const OfferModal = ({
     setTriggeredByViewLocationsButton(true);
   };
   const onClosestDirectionsClick = () => {
-    getDirections(nearestLocations[0].address);
+    if (nearestLocations?.length > 0) {
+      getDirections(nearestLocations[0].address);
+    }
   };
 
   const onModalHide = () => {
