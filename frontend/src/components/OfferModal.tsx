@@ -75,6 +75,8 @@ const OfferModal = ({
           const _nearestLocations = await getNearestLocations({
             voucherId: selectedVoucher?.voucher?.id,
           });
+          console.log('[Debug] voucherId sent:', selectedVoucher?.voucher?.id);
+          console.log('[Debug] nearestLocations response:', JSON.stringify(_nearestLocations));
           dispatch(setNearestLocations(_nearestLocations));
           timingAnimation(loaderOpacity, 0, 500, 0, () => {
             setIsLoading(false);

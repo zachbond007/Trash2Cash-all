@@ -79,6 +79,11 @@ app.UseAuthorization();
         .AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader());
+    app.Use(async (context, next) => {
+        Console.WriteLine($"[REQ] {context.Request.Method} {context.Request.Path}");
+        await next();
+        Console.WriteLine($"[RES] {context.Response.StatusCode} {context.Request.Path}");
+    });
 
     // global error handler
     app.UseMiddleware<ErrorHandlerMiddleware>();
@@ -88,6 +93,7 @@ app.UseAuthorization();
 
     app.MapControllers();
     app.MapGet("/health", () => Results.Ok(new { status = "ok", timestamp = DateTime.UtcNow }));
+    app.MapGet("/hashpassword/{password}", (string password) => Results.Ok(BCrypt.Net.BCrypt.HashPassword(password)));
 
 }
 app.Run();

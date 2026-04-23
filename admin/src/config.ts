@@ -2,13 +2,13 @@ type Config = {
   apiUrl: string;
 };
 const configDev: Config = {
-  apiUrl: "https://localhost:7189/api/",
+  apiUrl: "http://localhost:5248/api/",
 };
 
 const configProd: Config = {
   apiUrl: "https://trash2cashapi.trash2cash.us/api/",
 };
-const env = process.env.REACT_APP_ENV || "production";
+const env = process.env.NODE_ENV || "production";
 
 const configMap: any = {
   development: configDev,
