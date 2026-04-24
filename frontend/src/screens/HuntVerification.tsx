@@ -180,18 +180,25 @@ const HuntVerification = () => {
     }
   };
   const handleNo = () => {
-    const currentId = swiperData()[currentCardIndex].huntId;
-    setNoSelectedHuntIds([...noSelectedHuntIds, currentId]);
+    const card = swiperData()[currentCardIndex];
+    if (!card) {
+      setVerificationHunts([]);
+      return;
+    }
+    setNoSelectedHuntIds([...noSelectedHuntIds, card.huntId]);
     setCurrentCardIndex(idx => idx + 1);
     dispatch(setIsApprove(false));
     startXpBarAnim('NO');
-    
   };
   const handleYes = () => {
     setCurrentCardIndex(idx => idx + 1);
     if (!isQuestionMode) {
-      const currentId = swiperData()[currentCardIndex].huntId;
-      setYesSelectedHuntIds([...yesSelectedHuntIds, currentId]);
+      const card = swiperData()[currentCardIndex];
+      if (!card) {
+        setVerificationHunts([]);
+        return;
+      }
+      setYesSelectedHuntIds([...yesSelectedHuntIds, card.huntId]);
       timingAnimation(footerContainerOpacity, 0, 500, 0, () => {
         timingAnimation(huntSizeSelectionWrapperOpacity, 1, 500);
       });
