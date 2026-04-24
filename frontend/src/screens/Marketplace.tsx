@@ -187,7 +187,7 @@ const Marketplace = () => {
           itemHeight={146}
           contentContainerStyle={[
             styles.voucherListContainer,
-            tabBehaviour && isMarketplaceScreen && {paddingTop: 46},
+            false && tabBehaviour && isMarketplaceScreen && {paddingTop: 46},
           ]}
           style={{marginBottom: -insets.bottom}}
           renderFooter={() => {

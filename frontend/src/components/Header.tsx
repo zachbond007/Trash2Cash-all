@@ -178,7 +178,7 @@ const Header = ({containerStyle}: HeaderProps) => {
       <View
         style={[
           styles.shadow,
-          tabBehaviour && isMarketplaceScreen && {height: 86},
+          false && tabBehaviour && isMarketplaceScreen && {height: 86},
         ]}
       />
       <View style={styles.container}>
@@ -198,7 +198,7 @@ const Header = ({containerStyle}: HeaderProps) => {
           isSocialUser={user!.isSocialUser}
         />
       </View>
-      {isMarketplaceScreen && tabBehaviour && (
+      {false && isMarketplaceScreen && tabBehaviour && (
         <View style={styles.marketplaceTabContainer}>
           {!isOnlineTab ? (
             <>

@@ -88,10 +88,10 @@ public class LevelService : ILevelService
     public async Task<int> GetNextLevelRequiredXp(int level)
     {
         var currentLevel = await _dbContext.Levels.FindAsync(level);
-        var nextLevel = await _dbContext.Levels.FindAsync(level+1);
-        var nextLevelRequiredXp = nextLevel.RequiredXP - currentLevel.RequiredXP;
-
-        return nextLevelRequiredXp;
-       
+        var nextLevel = await _dbContext.Levels.FindAsync(level + 1);
+        if (currentLevel == null || nextLevel == null)
+            return 0;
+        return nextLevel.RequiredXP - currentLevel.RequiredXP;
     }
+
 }
