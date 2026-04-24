@@ -17,8 +17,7 @@ import {timingAnimation} from '../utils/AnimationHelper';
 import GradientOverlay from '../components/GradientOverlay';
 import {FlashModes} from '../types';
 import {flashActions} from '../assets/DATA';
-import {uploadImage} from '../utils/S3Helper';
-import {createHunt} from '../api/hunt';
+import {createHunt, uploadHuntImage} from '../api/hunt';
 import Loader from '../components/Loader';
 import GradientWrapper from '../components/GradientWrapper';
 import Text from '../components/Text';
@@ -69,7 +68,7 @@ const Home = () => {
       setTempPicture(data.uri);
       cameraRef.current.resumePreview();
       const result = await compressImage(data.uri);
-      const imageKey = await uploadImage(result, 'images/hunts/');
+      const imageKey = await uploadHuntImage(result);      
       //! IF USING A SIMULATOR, USE THIS TO CREATE RANDOM HUNT IMAGE
       // const imageKey = await uploadImage('https://picsum.photos/1000/2000?random=1','images/hunts/',);
       timingAnimation(loaderOpacity, 0, 500);

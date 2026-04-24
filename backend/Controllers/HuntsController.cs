@@ -13,12 +13,14 @@ using trash2cash_backend.Models.Hunts;
 [ApiController]
 public class HuntsController : ControllerBase
 {
-    private readonly IHuntService _huntService;
+        private readonly IHuntService _huntService;
+        private readonly IS3Service _s3Service;
 
-    public HuntsController(IHuntService huntService)
-    {
-        _huntService = huntService;
-    }
+        public HuntsController(IHuntService huntService, IS3Service s3Service)
+        {
+            _huntService = huntService;
+            _s3Service = s3Service;
+        }
 
     [HttpGet]
     public async Task<ActionResult<ListResponse<Hunt>>> GetAllHunts()
@@ -93,6 +95,13 @@ public class HuntsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("uploadImage")]
+    public async Task<IActionResult> UploadImage(IFormFile file)
+    {
+        var ext = Path.GetExtension(file.FileName);
+        var imageKey = await _s3Service.UploadFile(file, "hunts/" + Guid.NewGuid() + ext);
+        return Ok(new { imageKey });
+    }
 
     [HttpPost("createHunt")]
     public async Task<IActionResult> CreateHunt(CreateHuntRequest req)

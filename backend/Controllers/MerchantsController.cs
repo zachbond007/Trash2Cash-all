@@ -57,8 +57,6 @@ public class MerchantsController : ControllerBase
         [FromForm] string color,
         [FromForm] IFormFile imageKey)
     {
-        if (imageKey == null || imageKey.Length == 0)
-            return BadRequest("Invalid file");
 
         var merchant = new Merchant()
         {

@@ -56,7 +56,7 @@ export const dataProvider = (type, resource, params) => {
         }));
     case "UPDATE": {
       return axios
-        .put(`${apiUrl}${resource}/${params.id}`, params.data, { headers })
+        .put(`${apiUrl}${resource}/${params.id}`, { ...params.data, id: params.id }, { headers })
         .then(({ data }) => ({
           data,
         }));

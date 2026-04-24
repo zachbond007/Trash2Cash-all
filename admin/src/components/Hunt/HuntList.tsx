@@ -6,7 +6,6 @@ import {
   ReferenceField,
   ReferenceInput,
   SelectInput,
-  ImageField,
   SelectField,
 } from "react-admin";
 import { huntStatuses } from "./HuntStatuses";
@@ -41,7 +40,18 @@ const HuntList = (props: any) => {
         <ReferenceField reference={"users"} source={"userId"}>
           <FunctionField render={(v: any) => `${v.username} - ${v.email}`} />
         </ReferenceField>
-        <ImageField source={"imageKey"} label="Image" />
+          <FunctionField
+          label="Image"
+          render={(v: any) =>
+            v.imageKey ? (
+              <img
+                src={`https://trash2cash-s3-bucket-1.s3.eu-north-1.amazonaws.com/${v.imageKey}`}
+                style={{ maxHeight: 80 }}
+                alt="hunt"
+              />
+            ) : null
+          }
+        />
         <TextField source="status" />
         <FunctionField
           label={"Time passed"}

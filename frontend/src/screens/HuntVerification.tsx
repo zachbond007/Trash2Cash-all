@@ -185,16 +185,7 @@ const HuntVerification = () => {
     setCurrentCardIndex(idx => idx + 1);
     dispatch(setIsApprove(false));
     startXpBarAnim('NO');
-    appsFlyer.logEvent(
-      'verification_no_clicked',
-      {user},
-      res => {
-        console.log(res);
-      },
-      err => {
-        console.error(err);
-      },
-    );
+    
   };
   const handleYes = () => {
     setCurrentCardIndex(idx => idx + 1);
@@ -255,12 +246,16 @@ const HuntVerification = () => {
         quantity: 3,
       });
       setVerificationHunts(huntImages);
-      const arr: Source[] = huntImages.map(x => {
-        return {
-          uri: `${s3BaseUrl + x?.imageKey}`,
-        };
-      });
+      if (huntImages.length > 0) {
+        dispatch(setCurrentHunt(huntImages[0]));
+      }
+      const arr: Source[] = huntImages
+        .filter(x => x?.imageKey)
+        .map(x => ({uri: s3BaseUrl + x.imageKey}));
       FastImage.preload(arr);
+      timingAnimation(huntImagesLoaderOpacity, 0, 500, arr.length > 0 ? 1500 : 0, () => {
+        setIsHuntImagesLoading(false);
+      });
     };
     prepareData();
   }, []);
@@ -348,9 +343,10 @@ const HuntVerification = () => {
             if (card?.imageKey) {
               return (
                 <View style={styles.card}>
-                  <FastImage
+                   <FastImage
                     onLoadStart={onLoadStart}
                     onLoadEnd={onLoadedImage}
+                    onError={onLoadedImage}
                     source={{uri: s3BaseUrl + card.imageKey}}
                     resizeMode="cover"
                     style={styles.huntImage}

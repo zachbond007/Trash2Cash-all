@@ -29,7 +29,7 @@ const Login = () => {
     const isEmailValid = validateEmail(email);
     if (isEmailValid) {
       const result = await login({email, password});
-      if (result) {
+      if (result?.jwtToken) {
         await AsyncStorage.setItem('jwtToken', result.jwtToken);
         await AsyncStorage.setItem('email', email);
         dispatch(setUser(result));
