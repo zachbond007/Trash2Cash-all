@@ -480,14 +480,18 @@ const HuntVerification = () => {
               bottom: 96,
             },
             isQuestionMode && {display: 'none'},
+            noHuntExists && {opacity: 0.3},
           ]}>
-          <VerificationActions
+
+           <VerificationActions
             isLoading={isLoading}
             handleNo={() => {
+              if (!swiperRef.current) return;
               setNoButtonClicked(true);
               swiperRef.current.swipeLeft();
             }}
             handleYes={() => {
+              if (!swiperRef.current) return;
               swiperRef.current.swipeRight();
             }}
           />

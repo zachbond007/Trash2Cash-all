@@ -130,12 +130,9 @@ const OfferModal = ({
       timingAnimation(loaderOpacity, 1, 500);
       Geolocation.getCurrentPosition(
         async res => {
-          const isInRadiusPromises = nearestLocations.map(async location => {
-            const {lat, lng} = location;
-            return isInRadius(lat, lng);
-          });
-          const isInRadiusResults = await Promise.all(isInRadiusPromises);
-          const _isInRadius = isInRadiusResults.includes(true);
+          const _isInRadius = nearestLocations.some(location =>
+            isInRadius(location.lat, location.lng, res.coords.latitude, res.coords.longitude),
+          );
           timingAnimation(loaderOpacity, 0, 500, 0, async () => {
             setIsLoading(false);
             if (_isInRadius) {

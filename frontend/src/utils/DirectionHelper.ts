@@ -35,7 +35,7 @@ export const getDirections = (address: string) => {
   );
 };
 
-const RADIUS = 300; // radius in meters
+const RADIUS = 3000; // radius in meters
 
 const getDistanceInMeter = (
   lat1: number,
@@ -61,28 +61,14 @@ const getDistanceInMeter = (
   return d * 1000; // Distance in meters
 };
 
-export const isInRadius = (lat: number, lng: number) => {
-  // requestLocationPermission();
-  return new Promise((resolve, reject) => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const {latitude, longitude} = position.coords;
-        const distance = getDistanceInMeter(latitude, longitude, lat, lng);
-        if (distance <= RADIUS) {
-          console.log('You are in the radius');
-          resolve(true);
-        } else {
-          console.log('You are not in the radius');
-          resolve(false);
-        }
-      },
-      error => {
-        console.log(error.message);
-        reject(error);
-      },
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
-    );
-  });
+export const isInRadius = (lat: number, lng: number, userLat: number, userLng: number): boolean => {
+  const distance = getDistanceInMeter(userLat, userLng, lat, lng);
+  if (distance <= RADIUS) {
+    console.log('You are in the radius');
+    return true;
+  }
+  console.log('You are not in the radius');
+  return false;
 };
 
 export const getDistance = (

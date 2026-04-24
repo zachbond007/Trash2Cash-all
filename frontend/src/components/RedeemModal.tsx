@@ -66,10 +66,10 @@ const RedeemModal = ({
             {selectedVoucher?.voucher.code}
           </Text>
         </View>
-      ) : isBarcode ? (
+      ) : isBarcode && selectedVoucher?.voucher?.code ? (
         <Barcode
           format="CODE39"
-          value={selectedVoucher.voucher.code ?? ''}
+          value={selectedVoucher.voucher.code}
           style={styles.barcode}
           height={126}
           maxWidth={screenWidth - 60}
