@@ -42,6 +42,8 @@ import EllipseIcon from '../assets/icons/ellipse.png';
 import Geolocation from '@react-native-community/geolocation';
 import Button from './Button';
 import {checkLocationPermissions} from '../utils/LocationHelper';
+import OfferModal from './OfferModal';
+
 
 interface HeaderProps {
   containerStyle?: StyleProp<ViewStyle>;
@@ -66,6 +68,8 @@ const Header = ({containerStyle}: HeaderProps) => {
   const [isLevelUpModalVisible, setIsLevelUpModalVisible] = useState(false);
   const [isLevelUpModalClosed, setIsLevelUpModalClosed] = useState(false);
   const [isClaim, setIsClaim] = useState(false);
+  const [claimedVoucher, setClaimedVoucher] = useState<UnlockedVoucher | null>(null);
+  const [isRedeemModalVisible, setIsRedeemModalVisible] = useState(false);
   const levelBarValue = useRef(new Animated.Value(20)).current;
   const containerTopPosition = useRef(new Animated.Value(-100)).current;
 
@@ -126,9 +130,11 @@ const Header = ({containerStyle}: HeaderProps) => {
     <UnlockedVoucherCard
       key={index}
       onCardClick={() => {
+        setClaimedVoucher(item);
         setIsClaim(true);
         setIsLevelUpModalVisible(false);
       }}
+
       unlockedVoucher={item}
       dontShowClaim={isTutorial}
     />
@@ -142,10 +148,11 @@ const Header = ({containerStyle}: HeaderProps) => {
         index: 0,
         routes: [{name: 'PreRegister', params: {pageBehaviour: 'NEW_USER'}}],
       });
+
     } else if (isClaim) {
       setIsLevelUpModalVisible(false);
       setIsClaim(false);
-      appNavigation.navigate('Marketplace');
+      setIsRedeemModalVisible(true);
     }
     setIsLevelUpModalClosed(true);
     setTimeout(() => {
@@ -293,10 +300,32 @@ const Header = ({containerStyle}: HeaderProps) => {
           title={isTutorial ? 'Create an account!' : 'Awesome!'}
         />
       </Modal>
+      {claimedVoucher && (
+        <OfferModal
+          isVisible={isRedeemModalVisible}
+          onCloseModal={() => {
+            setIsRedeemModalVisible(false);
+            setClaimedVoucher(null);
+          }}
+          onClaimOfferClick={() => {
+            setIsRedeemModalVisible(false);
+            setClaimedVoucher(null);
+          }}
+          onViewLocationsClick={() => {
+            setIsRedeemModalVisible(false);
+            setClaimedVoucher(null);
+          }}
+          selectedVoucher={claimedVoucher}
+          containerStyle={{maxHeight: screenHeight - 180}}
+        />
+      )}
+
     </Animated.View>
   );
 };
 
+
+export default Header;
 export default Header;
 
 const styles = StyleSheet.create({

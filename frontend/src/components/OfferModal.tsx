@@ -43,6 +43,7 @@ interface OfferModalProps {
   onClaimOfferClick: () => void;
   onViewLocationsClick: () => void;
   selectedVoucher: MarketplaceVoucher;
+  containerStyle?: object;
 }
 
 const OfferModal = ({
@@ -51,6 +52,7 @@ const OfferModal = ({
   onClaimOfferClick,
   selectedVoucher,
   onViewLocationsClick,
+  containerStyle,
 }: OfferModalProps) => {
   const dispatch = useAppDispatch();
   const {nearestLocations, user} = useAppSelector(state => state.app);
@@ -218,7 +220,9 @@ const OfferModal = ({
       containerStyle={[
         styles.offerDetailsModalContainer,
         tabBehaviour && {maxHeight: screenHeight - 180},
+        containerStyle,
       ]}
+
       onBackdropPress={onCloseModal}
       onBackButtonPress={onCloseModal}
       onModalHide={onModalHide}
