@@ -74,8 +74,8 @@ const HuntOwner = () => {
     }
   }, [isRewardAnimationVisible]);
 
-  const yesCount = currentHuntDetails?.yesCount?.toString();
-  const noCount = currentHuntDetails?.noCount?.toString();
+  const yesCount = (currentHuntDetails?.yesCount ?? 0).toString();
+  const noCount = (currentHuntDetails?.noCount ?? 0).toString();
 
   return (
     <View
