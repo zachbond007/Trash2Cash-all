@@ -11,7 +11,7 @@ export const createMerchant = async (
   const jwtToken = JSON.parse(localStorage.getItem("auth")!).data.jwtToken;
   const formData = new FormData();
   formData.append("name", request.name);
-  formData.append("imageKey", request.imageKey);
+  if (request.imageKey) formData.append("imageKey", request.imageKey);
   formData.append("contactName", request.contactName ?? "");
   formData.append("contactEmail", request.contactEmail ?? "");
   formData.append("contactPhone", request.contactPhone ?? "");
@@ -42,7 +42,7 @@ export const editMerchant = async (
   const formData = new FormData();
   formData.append("id", request.id.toString());
   formData.append("name", request.name);
-  formData.append("imageKey", request.imageKey);
+  if (request.imageKey) formData.append("imageKey", request.imageKey);
   formData.append("contactName", request.contactName ?? "");
   formData.append("contactEmail", request.contactEmail ?? "");
   formData.append("contactPhone", request.contactPhone ?? "");

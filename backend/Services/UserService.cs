@@ -251,8 +251,8 @@ public class UserService : IUserService
         string encryptedData = EncryptDecryptString.Encrypt("TRASH-2-CASH-SPECIAL-KEY" + "=====" + req.Email + "=====" + DateTime.Now.ToString());
         var link = await _emailService.GetVerificationEmailLink(encryptedData, "email-verify", "email", req.Email);
 
-        var htmlBody = $"<html>\n<body>\n Welcome to Trash2Cash! :)) <br></br> <a href=\"{link}\">Click here to verify your email</a><br></br>Thanks! <br></br>The Trash2Cash Team<br></br></body></html>";
-        _emailService.SendEmail(req.Email, "Trash2Cash email verification", htmlBody);
+        var htmlBody = $"<html>\n<body>\nWelcome to Trash2Cash! :))<br><br><strong><a href=\"{link}\">Click here to verify your email</a></strong><br><br>Thanks!<br><br>The Trash2Cash Team\n</body></html>";
+
     }
     public bool VerifyEmail(VerifyEmailRequest req)
     {

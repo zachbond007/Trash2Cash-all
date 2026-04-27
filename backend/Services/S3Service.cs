@@ -40,7 +40,7 @@ public class S3Service : IS3Service
             throw new Exception("Empty file");
 
         // Instantiate an AmazonS3Client object with your AWS credentials
-        var client = new AmazonS3Client(_s3Settings.AccessKey, _s3Settings.SecretKey, Amazon.RegionEndpoint.USEast2);
+        var client = new AmazonS3Client(_s3Settings.AccessKey, _s3Settings.SecretKey, Amazon.RegionEndpoint.EUNorth1);
 
         // Instantiate a TransferUtility object
         var utility = new TransferUtility(client);
@@ -75,7 +75,7 @@ public class S3Service : IS3Service
     {
         try
         {
-            var _s3Client = new AmazonS3Client(_s3Settings.AccessKey, _s3Settings.SecretKey, Amazon.RegionEndpoint.USEast2);
+            var _s3Client = new AmazonS3Client(_s3Settings.AccessKey, _s3Settings.SecretKey, Amazon.RegionEndpoint.EUNorth1);
 
             // Delete the object from S3
             await _s3Client.DeleteObjectAsync(new Amazon.S3.Model.DeleteObjectRequest
@@ -96,7 +96,7 @@ public class S3Service : IS3Service
         if (newImage == null || newImage.Length == 0)
             throw new Exception("Empty file");
 
-        var _s3Client = new AmazonS3Client(_s3Settings.AccessKey, _s3Settings.SecretKey, Amazon.RegionEndpoint.USEast2);
+        var _s3Client = new AmazonS3Client(_s3Settings.AccessKey, _s3Settings.SecretKey, Amazon.RegionEndpoint.EUNorth1);
         await _s3Client.DeleteObjectAsync(new Amazon.S3.Model.DeleteObjectRequest
         {
             BucketName = _s3Settings.BucketName,
