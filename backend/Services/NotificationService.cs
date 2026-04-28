@@ -1,61 +1,39 @@
 ﻿namespace trash2cash_backend.Services;
 
-using Microsoft.Extensions.Configuration;
-using MailKit.Net.Smtp;
-using MimeKit;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using System.Text;
+using FirebaseAdmin.Messaging;
 
 public interface INotificationService
 {
-    Task SendNotification(string fcmToken, string title, string body);
+    Task SendNotification(string? fcmToken, string title, string body);
 }
 
 public class NotificationService : INotificationService
 {
-    private readonly IConfiguration _configuration;
-
-    public NotificationService(IConfiguration configuration)
+    public async Task SendNotification(string? fcmToken, string title, string body)
     {
-        _configuration = configuration;
-    }
+        if (string.IsNullOrEmpty(fcmToken)) return;
 
-    public async Task SendNotification(string fcmToken, string title, string body)
-    {
-        if (fcmToken != null && fcmToken != "")
+        try
         {
-            var serverKey = _configuration.GetValue<string>("NotificationSettings:ServerKey");
-
-            using (var client = new HttpClient())
+            var message = new Message()
             {
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "key=" + serverKey);
-
-                var notification = new
+                Token = fcmToken,
+                Notification = new Notification()
                 {
-                    to = fcmToken,
-                    notification = new
-                    {
-                        title = title,
-                        body = body,
-                        sound = "default"
-                    }
-                };
-
-                var json = JsonConvert.SerializeObject(notification);
-
-                var response = await client.PostAsync("https://fcm.googleapis.com/fcm/send", new StringContent(json, Encoding.UTF8, "application/json"));
-
-                if (response.IsSuccessStatusCode)
+                    Title = title,
+                    Body = body,
+                },
+                Apns = new ApnsConfig()
                 {
-                    Console.WriteLine("Notification has been sent successfully.");
+                    Aps = new Aps() { Sound = "default" }
                 }
-                else
-                {
-                    Console.WriteLine("Failed to send notification.");
-                }
-            }
+            };
+
+            await FirebaseMessaging.DefaultInstance.SendAsync(message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to send notification: {ex.Message}");
         }
     }
 }

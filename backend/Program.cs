@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using System.Timers;
 using static trash2cash_backend.Services.EmailService;
 using System.Threading;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 
 var builder = WebApplication.CreateBuilder(args );
 
@@ -57,6 +59,15 @@ var env = builder.Environment;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var serviceAccountPath = builder.Configuration.GetValue<string>("NotificationSettings:ServiceAccountPath");
+if (!string.IsNullOrEmpty(serviceAccountPath) && File.Exists(serviceAccountPath))
+{
+    FirebaseApp.Create(new AppOptions()
+    {
+        Credential = GoogleCredential.FromFile(serviceAccountPath)
+    });
+}
 
 var app = builder.Build();
 
