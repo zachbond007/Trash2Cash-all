@@ -132,27 +132,24 @@ public class HuntService : IHuntService
                     hunt.EarnedXP = 0;
                     break;
                 case "1_10_ITEMS":
-                    hunt.EarnedXP = actions.First(x => x.ActionType == "5_PLUS_VERIFIED_ITEMS").RewardXP;
+                    hunt.EarnedXP = actions.FirstOrDefault(x => x.ActionType == "5_PLUS_VERIFIED_ITEMS")?.RewardXP ?? 0;
                     break;
                 case "SMALL_BAG":
-                    hunt.EarnedXP = actions.First(x => x.ActionType == "5_PLUS_VERIFIED_SMALL_BAG").RewardXP;
+                    hunt.EarnedXP = actions.FirstOrDefault(x => x.ActionType == "5_PLUS_VERIFIED_SMALL_BAG")?.RewardXP ?? 0;
                     break;
                 case "LARGE_BAG":
-                    hunt.EarnedXP = actions.First(x => x.ActionType == "5_PLUS_VERIFIED_LARGE_BAG").RewardXP;
+                    hunt.EarnedXP = actions.FirstOrDefault(x => x.ActionType == "5_PLUS_VERIFIED_LARGE_BAG")?.RewardXP ?? 0;
                     break;
                 case "MORE_THAN_LARGE_BAG":
-                    hunt.EarnedXP = actions.First(x => x.ActionType == "5_PLUS_VERIFIED_MORE_THAN_LARGE_BAG").RewardXP;
-                    break;
-                default:
+                    hunt.EarnedXP = actions.FirstOrDefault(x => x.ActionType == "5_PLUS_VERIFIED_MORE_THAN_LARGE_BAG")?.RewardXP ?? 0;
                     break;
             }
             var user = _dbContext.Users.First(x => x.Id == hunt.UserId);
             if (hunt.EarnedXP != 0)
             {
                 user.EarnedXP += Convert.ToInt32(hunt.EarnedXP);
-                var level = levels.First(x => x.LevelNumber == user.CurrentLevel + 1);
-                // User levels up
-                if (level.RequiredXP <= user.EarnedXP)
+                var level = levels.FirstOrDefault(x => x.LevelNumber == user.CurrentLevel + 1);
+                if (level != null && level.RequiredXP <= user.EarnedXP)
                 {
                     user.CurrentLevel++;
                     _notificationService.SendNotification(user.FcmToken, "Level Up 😎", "You leveled up, nice! Check to see what rewards you’ve unlocked");
@@ -181,8 +178,9 @@ public class HuntService : IHuntService
             _dbContext.Hunts.Update(hunt);
             _dbContext.SaveChanges();
         }
-        catch 
+        catch (Exception ex)
         {
+            Console.WriteLine($"AdminVerifyHunt failed: {ex.Message}");
             return false;
         }
         return true;
