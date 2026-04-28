@@ -11,7 +11,12 @@ public class NotificationService : INotificationService
 {
     public async Task SendNotification(string? fcmToken, string title, string body)
     {
-        if (string.IsNullOrEmpty(fcmToken)) return;
+        Console.WriteLine($"[NOTIFY] token={fcmToken ?? "NULL"} title={title}");
+        if (string.IsNullOrEmpty(fcmToken))
+        {
+            Console.WriteLine("[NOTIFY] Skipped - fcmToken is null/empty");
+            return;
+        }
 
         try
         {
@@ -23,11 +28,19 @@ public class NotificationService : INotificationService
                     Title = title,
                     Body = body,
                 },
+                Android = new AndroidConfig()
+                {
+                    Priority = Priority.High,
+                    Notification = new AndroidNotification()
+                    {
+                        ChannelId = "high-priority",
+                     }
+                },
                 Apns = new ApnsConfig()
                 {
                     Aps = new Aps() { Sound = "default" }
                 }
-            };
+             };
 
             await FirebaseMessaging.DefaultInstance.SendAsync(message);
         }
