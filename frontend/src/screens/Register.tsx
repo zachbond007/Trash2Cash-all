@@ -15,9 +15,8 @@ import {useAppDispatch} from '../redux/store';
 import {setLoggedIn, setUser} from '../redux/slices/appSlice';
 import Toast from 'react-native-toast-message';
 import {validateEmail} from '../utils/ValidationHelper';
-import {registerUser, verifyEmail} from '../api/user';
+import {registerUser, uploadProfileImage, verifyEmail} from '../api/user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {uploadImage} from '../utils/S3Helper';
 import {requestNotificationPermission} from '../utils/NotificationsHelper';
 import Loader from '../components/Loader';
 
@@ -88,7 +87,17 @@ const Register = () => {
       setIsEmailVerificationModalVisible(true);
       setIsLoading(true);
       if (avatar) {
-        imageKey = await uploadImage(avatar.uri!, 'images/users/');
+        imageKey = await uploadProfileImage(avatar.uri!);
+        if (!imageKey) {
+          setIsEmailVerificationModalVisible(false);
+          setIsLoading(false);
+          Toast.show({
+            type: 'error',
+            text1: 'Image upload failed',
+            text2: 'Please try a different photo or continue without one.',
+          });
+          return;
+        }
       }
       const verificationToken = await AsyncStorage.getItem(
         'email_verification_token',

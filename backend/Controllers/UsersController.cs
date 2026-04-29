@@ -133,6 +133,20 @@ public class UsersController : ControllerBase
     }
 
     [AllowAnonymous]
+    [HttpPost("uploadProfileImage")]
+    public async Task<IActionResult> UploadProfileImage(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+        {
+            return BadRequest("Empty file");
+        }
+
+        var ext = Path.GetExtension(file.FileName);
+        var imageKey = await _s3Service.UploadFile(file, "users/" + Guid.NewGuid() + ext);
+        return Ok(new { imageKey });
+    }
+
+    [AllowAnonymous]
     [HttpPost("registerWithEmail")]
     public IActionResult Register(RegisterRequest req)
     {

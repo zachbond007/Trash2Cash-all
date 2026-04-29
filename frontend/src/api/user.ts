@@ -29,6 +29,26 @@ export const registerUser = async (request: RegisterUserRequest) => {
   }
 };
 
+export const uploadProfileImage = async (imageUri: string): Promise<string> => {
+  const url = baseUrl + 'uploadProfileImage';
+  const formData = new FormData();
+  formData.append('file', {
+    uri: imageUri,
+    type: 'image/jpeg',
+    name: 'profile.jpg',
+  } as any);
+
+  try {
+    const response = await axios.post(url, formData, {
+      timeout: 30000,
+    });
+    return response.data?.imageKey ?? '';
+  } catch (error) {
+    logger.error('Error in uploadProfileImage:', error);
+    return '';
+  }
+};
+
 export const registerEmailVerification = async (request: RegisterEmailVerificationRequest) => {
   const url = baseUrl + 'registerEmailVerification';
   const result = await post(url, request);
