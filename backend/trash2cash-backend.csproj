@@ -34,6 +34,8 @@
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
     <None Remove="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <None Remove="System.IdentityModel.Tokens.Jwt" />
+    <None Remove="firebase-service-account.json" />
+    <Content Remove="firebase-service-account.json" />
     <None Remove="Models\Hunts\" />
     <None Remove="Models\Config\" />
     <None Remove="Models\HuntVerifications\" />

@@ -83,8 +83,9 @@ public class EmailService : IEmailService
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             // Make the POST request to the Firebase Dynamic Links API
+            var dynamicLinksApiKey = _configuration.GetValue<string>("Firebase:DynamicLinksApiKey");
             HttpResponseMessage response = await client.PostAsync(
-                "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyCUMMib5EFQG9vnFonrEShd-_b3MKu_y-I",
+                "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=" + dynamicLinksApiKey,
                 httpContent
             );
 

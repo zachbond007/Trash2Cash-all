@@ -1,0 +1,5 @@
+backend/firebase-service-account.json
+backend/appsettings.Local.json
+backend/appsettings.Secrets.json
+.env
+.env.*
