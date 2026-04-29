@@ -1,6 +1,6 @@
 // export const apiUrl = 'http://192.168.0.101:7189/api/';
 // export const apiUrl = 'http://10.0.2.2:5248/api/';
-export const apiUrl = 'http://localhost:5248/api/';
+export const apiUrl = 'https://api.trash2cash.us/api/';
 // export const apiUrl = 'https://trash2cashapi.trash2cash.us/v1/api/';
 // export const apiUrl = 'http://localhost:5248/api/';
 // export const apiUrl = 'http://yigit-mbp.local:5248/api/';

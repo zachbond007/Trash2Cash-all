@@ -6,7 +6,7 @@ const configDev: Config = {
 };
 
 const configProd: Config = {
-  apiUrl: "https://trash2cashapi.trash2cash.us/api/",
+  apiUrl: "https://api.trash2cash.us/api/",
 };
 const env = process.env.NODE_ENV || "production";
 
