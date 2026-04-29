@@ -1,3 +1,6 @@
+import type {MarketplaceVoucher} from './types';
+import type {NavigatorScreenParams} from '@react-navigation/native';
+
 export type AuthStackParams = {
   Loading: undefined;
   Login: undefined;
@@ -17,7 +20,7 @@ export type AuthStackParams = {
 };
 
 export type MainStackParams = {
-  TabsRoot: undefined;
+  TabsRoot: NavigatorScreenParams<AppStackParams> | undefined;
   Profile: undefined;
   Settings: undefined;
   AboutUs: undefined;
@@ -29,7 +32,11 @@ export type MainStackParams = {
 export type AppStackParams = {
   Home: undefined;
   HuntVerification: undefined;
-  Marketplace: undefined;
+  Marketplace:
+    | {
+        selectedVoucher?: MarketplaceVoucher;
+      }
+    | undefined;
 };
 export type Navigation = {
   navigate: (scene: string) => void;

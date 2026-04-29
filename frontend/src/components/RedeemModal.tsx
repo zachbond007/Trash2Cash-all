@@ -82,9 +82,7 @@ const RedeemModal = ({
         fontSize={12}
         style={
           styles.footerDescription
-        }>{`The online discounts offered on Trash2Cash are not exclusive to our app users. We're working actively with online retailers to secure exclusive deals and will update these offerings as we grow.
-        
-Trash2Cash offers cannot be combined with any other discounts, offers, or promotions. Discounts are intended to be used on their own and cannot be applied to previously discounted products or services.
+        }>{`Trash2Cash offers cannot be combined with any other discounts, offers, or promotions. Discounts are intended to be used on their own and cannot be applied to previously discounted products or services.
 
 Offers provided to staff members at various businesses are offered solely at the discretion of the participating businesses. We do not guarantee the availability or accuracy of these discounts and are not responsible for any errors, omissions, or changes to the discounts.`}</Text>
     </Modal>

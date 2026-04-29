@@ -31,6 +31,8 @@ import {getOnlineVouchersForMarketPlace} from '../api/onlineVoucher';
 import {checkLocationPermissions} from '../utils/LocationHelper';
 import Geolocation from '@react-native-community/geolocation';
 import Text from '../components/Text';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {AppStackParams} from '../types';
 
 interface RenderVoucherProps {
   item: MarketplaceVoucher;
@@ -41,6 +43,7 @@ interface RenderCategoryProps {
   index: number;
 }
 const Marketplace = () => {
+  const route = useRoute<RouteProp<AppStackParams, 'Marketplace'>>();
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const {
@@ -67,6 +70,17 @@ const Marketplace = () => {
 
   const isLocalTab = tabBehaviour === 'LOCAL';
   const isOnlineTab = tabBehaviour === 'ONLINE';
+
+  useEffect(() => {
+    const unlockedVoucher = route.params?.selectedVoucher;
+    if (unlockedVoucher) {
+      dispatch(setTabBehaviour('LOCAL'));
+      dispatch(setSelectedCategory(null));
+      setSelectedVoucher(unlockedVoucher);
+      setIsOfferDetailsModalVisible(true);
+      timingAnimation(backgroundOverlayOpacity, 1, 500);
+    }
+  }, [route.params?.selectedVoucher]);
 
   useEffect(() => {
     const prepareData = async () => {

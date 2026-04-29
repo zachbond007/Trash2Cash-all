@@ -206,13 +206,17 @@ const OfferModal = ({
     }
   };
 
-  const redeemStep1 = tabBehaviour
-    ? 'Hit “Claim Offer” (below)'
-    : 'Go to a participating location (locations above)';
-  const redeemStep2 = tabBehaviour ? 'Shop with the store' : 'Claim this offer';
-  const redeemStep3 = tabBehaviour
-    ? 'Paste the copied code upon checkout!'
-    : 'Show your offer screen upon checkout';
+  const displayRedeemSteps = isLocalTab
+    ? [
+        'Shop with the store',
+        'Hit "Claim Offer" (below)',
+        'Show next screen to staff member upon checkout',
+      ]
+    : [
+        'Hit "Claim Offer" (below)',
+        'Shop with the store',
+        'Paste the copied code upon checkout!',
+      ];
 
   return (
     <Modal
@@ -281,7 +285,7 @@ const OfferModal = ({
             </View>
           </View>
           <Text fontSize={15} style={styles.redeemInstruction}>
-            {redeemStep1}
+            {displayRedeemSteps[0]}
           </Text>
         </View>
         <View style={styles.redeemContainer}>
@@ -295,7 +299,7 @@ const OfferModal = ({
             </View>
           </View>
           <Text fontSize={15} style={styles.redeemInstruction}>
-            {redeemStep2}
+            {displayRedeemSteps[1]}
           </Text>
         </View>
         <View style={styles.redeemContainer}>
@@ -303,7 +307,7 @@ const OfferModal = ({
             <View style={styles.innerCircle} />
           </View>
           <Text fontSize={15} style={styles.redeemInstruction}>
-            {redeemStep3}
+            {displayRedeemSteps[2]}
           </Text>
         </View>
       </View>

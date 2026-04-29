@@ -21,7 +21,7 @@ import {timingAnimation} from '../utils/AnimationHelper';
 import Modal from './Modal';
 import Text from './Text';
 import UnlockedVoucherCard from './UnlockedVoucherCard';
-import {AppStackParams, AuthStackParams} from '../types';
+import {AuthStackParams, MainStackParams} from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -42,7 +42,6 @@ import EllipseIcon from '../assets/icons/ellipse.png';
 import Geolocation from '@react-native-community/geolocation';
 import Button from './Button';
 import {checkLocationPermissions} from '../utils/LocationHelper';
-import OfferModal from './OfferModal';
 
 
 interface HeaderProps {
@@ -53,7 +52,7 @@ const Header = ({containerStyle}: HeaderProps) => {
   const authNavigation =
     useNavigation<NativeStackNavigationProp<AuthStackParams>>();
   const appNavigation =
-    useNavigation<NativeStackNavigationProp<AppStackParams>>();
+    useNavigation<NativeStackNavigationProp<MainStackParams>>();
   const dispatch = useAppDispatch();
   const {
     levelBarPercent,
@@ -68,8 +67,8 @@ const Header = ({containerStyle}: HeaderProps) => {
   const [isLevelUpModalVisible, setIsLevelUpModalVisible] = useState(false);
   const [isLevelUpModalClosed, setIsLevelUpModalClosed] = useState(false);
   const [isClaim, setIsClaim] = useState(false);
-  const [claimedVoucher, setClaimedVoucher] = useState<UnlockedVoucher | null>(null);
-  const [isRedeemModalVisible, setIsRedeemModalVisible] = useState(false);
+  const [claimedVoucher, setClaimedVoucher] =
+    useState<UnlockedVoucher | null>(null);
   const levelBarValue = useRef(new Animated.Value(20)).current;
   const containerTopPosition = useRef(new Animated.Value(-100)).current;
 
@@ -152,7 +151,15 @@ const Header = ({containerStyle}: HeaderProps) => {
     } else if (isClaim) {
       setIsLevelUpModalVisible(false);
       setIsClaim(false);
-      setIsRedeemModalVisible(true);
+      dispatch(setTabBehaviour('LOCAL'));
+      dispatch(setSelectedCategory(null));
+      appNavigation.navigate('TabsRoot', {
+        screen: 'Marketplace',
+        params: {
+          selectedVoucher: claimedVoucher ?? undefined,
+        },
+      });
+      setClaimedVoucher(null);
     }
     setIsLevelUpModalClosed(true);
     setTimeout(() => {
@@ -300,32 +307,11 @@ const Header = ({containerStyle}: HeaderProps) => {
           title={isTutorial ? 'Create an account!' : 'Awesome!'}
         />
       </Modal>
-      {claimedVoucher && (
-        <OfferModal
-          isVisible={isRedeemModalVisible}
-          onCloseModal={() => {
-            setIsRedeemModalVisible(false);
-            setClaimedVoucher(null);
-          }}
-          onClaimOfferClick={() => {
-            setIsRedeemModalVisible(false);
-            setClaimedVoucher(null);
-          }}
-          onViewLocationsClick={() => {
-            setIsRedeemModalVisible(false);
-            setClaimedVoucher(null);
-          }}
-          selectedVoucher={claimedVoucher}
-          containerStyle={{maxHeight: screenHeight - 180}}
-        />
-      )}
-
     </Animated.View>
   );
 };
 
 
-export default Header;
 export default Header;
 
 const styles = StyleSheet.create({
