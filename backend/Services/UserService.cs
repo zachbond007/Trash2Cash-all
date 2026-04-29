@@ -252,6 +252,7 @@ public class UserService : IUserService
         var link = await _emailService.GetVerificationEmailLink(encryptedData, "email-verify", "email", req.Email);
 
         var htmlBody = $"<html>\n<body>\nWelcome to Trash2Cash! :))<br><br><strong><a href=\"{link}\">Click here to verify your email</a></strong><br><br>Thanks!<br><br>The Trash2Cash Team\n</body></html>";
+        _emailService.SendEmail(req.Email, "Trash2Cash email verification", htmlBody);
 
     }
     public bool VerifyEmail(VerifyEmailRequest req)

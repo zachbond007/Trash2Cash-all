@@ -2,7 +2,6 @@ import Axios from 'axios';
 
 const headers: any = {
   Accept: 'application/json',
-  'Access-Control-Allow-Origin': '*',
   'Content-Type': 'application/json',
 };
 
@@ -37,15 +36,23 @@ export const get = async (
   if (token !== null) {
     headers.Authorization = 'Bearer ' + token;
   }
-  await Axios.get(url, {
-    headers: headers,
-    timeout: 10000,
-  })
-    .then((response: any) => {
-      res = response;
-    })
-    .catch(err => {
-      res = err.response ?? {data: null};
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers,
+      signal: controller.signal,
     });
+    const contentType = response.headers.get('content-type') ?? '';
+    const data = contentType.includes('application/json')
+      ? await response.json()
+      : await response.text();
+    res = {data, status: response.status};
+  } catch {
+    res = {data: null};
+  } finally {
+    clearTimeout(timeout);
+  }
   return res;
 };
