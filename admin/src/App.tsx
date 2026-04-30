@@ -71,8 +71,7 @@ const App = () => {
       dataProvider={dataProvider}
       authProvider={authProvider}
       // requireAuth
-      layout={Layout}
-      basename="/adminpanel/">
+      layout={Layout}>
       <Resource
         name="users"
         list={UserList}
