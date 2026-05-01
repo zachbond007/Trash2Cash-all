@@ -51,11 +51,12 @@ public class MerchantsController : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> AddMerchant([FromForm] string name,
-            [FromForm] string contactName,
-        [FromForm] string contactEmail,
-        [FromForm] string contactPhone,
-        [FromForm] string color,
-        [FromForm] IFormFile imageKey)
+        [FromForm] string? contactName,
+        [FromForm] string? contactEmail,
+        [FromForm] string? contactPhone,
+        [FromForm] string? color,
+        [FromForm] bool isActive,
+        [FromForm] IFormFile? imageKey)
     {
 
         var merchant = new Merchant()
@@ -65,12 +66,17 @@ public class MerchantsController : ControllerBase
             ContactName = contactName,
             ContactPhone = contactPhone,
             Color = color,
-            ImageKey = ""
+            ImageKey = "",
+            IsActive = isActive
         };
 
         var addedMerchant = await _merchantService.AddMerchantAsync(merchant);
-        var _imageKey = $"merchants/{addedMerchant.Id}/{Guid.NewGuid()}{Path.GetExtension(imageKey.FileName)}";
+        if (imageKey == null || imageKey.Length == 0)
+        {
+            return CreatedAtAction(nameof(GetMerchantById), new { id = addedMerchant.Id }, addedMerchant);
+        }
 
+        var _imageKey = $"merchants/{addedMerchant.Id}/{Guid.NewGuid()}{Path.GetExtension(imageKey.FileName)}";
         var result = await _s3Service.UploadFile(imageKey, _imageKey);
         addedMerchant.ImageKey = result;
         await _merchantService.UpdateMerchantAsync(addedMerchant,true);

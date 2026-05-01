@@ -16,10 +16,10 @@ export const createMerchant = async (
   formData.append("contactEmail", request.contactEmail ?? "");
   formData.append("contactPhone", request.contactPhone ?? "");
   formData.append("color", request.color ?? "");
+  formData.append("isActive", String(request.isActive ?? false));
 
   const res = await axios.post(baseUrl, formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
       Authorization: "Bearer " + jwtToken,
     },
   });
@@ -49,7 +49,6 @@ export const editMerchant = async (
   formData.append("color", request.color ?? "");
   const res = await axios.post(baseUrl + "edit", formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
       Authorization: "Bearer " + jwtToken,
     },
   });

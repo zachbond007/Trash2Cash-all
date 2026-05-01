@@ -23,6 +23,7 @@ export type CreateMerchantRequest = {
   contactEmail?: string;
   contactPhone?: string;
   color?: string;
+  isActive?: boolean;
 };
 export type EditMerchantRequest = {
   id: number;
@@ -32,6 +33,7 @@ export type EditMerchantRequest = {
   contactEmail?: string;
   contactPhone?: string;
   color?: string;
+  isActive?: boolean;
 };
 
 export type AdminVerifyHuntRequest = {

@@ -37,7 +37,7 @@ export const get = async (
     headers.Authorization = 'Bearer ' + token;
   }
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
+  const timeout = setTimeout(() => controller.abort(), 30000);
   try {
     const response = await fetch(url, {
       method: 'GET',
