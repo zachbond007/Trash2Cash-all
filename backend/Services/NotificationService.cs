@@ -1,5 +1,6 @@
 ﻿namespace trash2cash_backend.Services;
 
+using FirebaseAdmin;
 using FirebaseAdmin.Messaging;
 
 public interface INotificationService
@@ -30,7 +31,14 @@ public class NotificationService : INotificationService
                 }
             };
 
-            var messageId = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+            var firebaseApp = FirebaseApp.DefaultInstance;
+            if (firebaseApp == null)
+            {
+                Console.WriteLine("[NOTIFY] Skipped - FirebaseApp.DefaultInstance is null");
+                return;
+            }
+
+            var messageId = await FirebaseMessaging.GetMessaging(firebaseApp).SendAsync(message);
             Console.WriteLine($"[NOTIFY] Sent messageId={messageId}");
         }
         catch (Exception ex)

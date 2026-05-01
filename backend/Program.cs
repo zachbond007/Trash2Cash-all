@@ -63,10 +63,19 @@ builder.Services.AddSwaggerGen();
 var serviceAccountPath = builder.Configuration.GetValue<string>("NotificationSettings:ServiceAccountPath");
 if (!string.IsNullOrEmpty(serviceAccountPath) && File.Exists(serviceAccountPath))
 {
-    FirebaseApp.Create(new AppOptions()
+    if (FirebaseApp.DefaultInstance == null)
     {
-        Credential = GoogleCredential.FromFile(serviceAccountPath)
-    });
+        FirebaseApp.Create(new AppOptions()
+        {
+            Credential = GoogleCredential.FromFile(serviceAccountPath)
+        });
+    }
+
+    Console.WriteLine($"[FIREBASE] Initialized from {serviceAccountPath}");
+}
+else
+{
+    Console.WriteLine($"[FIREBASE] Not initialized. NotificationSettings:ServiceAccountPath='{serviceAccountPath ?? "NULL"}'");
 }
 
 var app = builder.Build();
