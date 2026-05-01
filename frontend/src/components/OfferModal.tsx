@@ -79,7 +79,7 @@ const OfferModal = ({
           });
           console.log('[Debug] voucherId sent:', selectedVoucher?.voucher?.id);
           console.log('[Debug] nearestLocations response:', JSON.stringify(_nearestLocations));
-          dispatch(setNearestLocations(_nearestLocations));
+          dispatch(setNearestLocations(_nearestLocations ?? []));
           timingAnimation(loaderOpacity, 0, 500, 0, () => {
             setIsLoading(false);
           });
@@ -132,7 +132,8 @@ const OfferModal = ({
       timingAnimation(loaderOpacity, 1, 500);
       Geolocation.getCurrentPosition(
         async res => {
-          const _isInRadius = nearestLocations.some(location =>
+          const locations = nearestLocations ?? [];
+          const _isInRadius = locations.some(location =>
             isInRadius(location.lat, location.lng, res.coords.latitude, res.coords.longitude),
           );
           timingAnimation(loaderOpacity, 0, 500, 0, async () => {
@@ -140,7 +141,7 @@ const OfferModal = ({
             if (_isInRadius) {
               const isExpiredOrNewClaim = await prepareClaims();
               if (isExpiredOrNewClaim) {
-                await addClaim({
+                void addClaim({
                   userId: user!.id,
                   voucherId: selectedVoucher.voucher.id,
                 });
@@ -164,7 +165,7 @@ const OfferModal = ({
             setIsReminderModalVisible(true);
           });
         },
-        {timeout: 5000},
+        {timeout: 12000, maximumAge: 30000},
       );
 
 

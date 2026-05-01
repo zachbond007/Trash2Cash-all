@@ -35,7 +35,7 @@ export const getDirections = (address: string) => {
   );
 };
 
-const RADIUS = 3000; // radius in meters
+const RADIUS = 535; // radius in meters
 
 const getDistanceInMeter = (
   lat1: number,
