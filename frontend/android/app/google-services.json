@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "913857544936",
     "project_id": "trash2cash-24d86",
-    "storage_bucket": "trash2cash-24d86.appspot.com"
+    "storage_bucket": "trash2cash-24d86.firebasestorage.app"
   },
   "client": [
     {
@@ -19,6 +19,14 @@
           "android_info": {
             "package_name": "com.trash2cashapp",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "913857544936-o1gc14p9dr6evcgela4ts1mtpjhjki1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trash2cashapp",
+            "certificate_hash": "c553591242c2fae908d146f08ba77c7b5cd480d8"
           }
         },
         {

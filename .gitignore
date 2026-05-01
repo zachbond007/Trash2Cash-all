@@ -3,3 +3,5 @@ backend/appsettings.Local.json
 backend/appsettings.Secrets.json
 .env
 .env.*
+*.keystore
+*.jks
