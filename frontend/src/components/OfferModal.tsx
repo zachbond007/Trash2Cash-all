@@ -369,7 +369,7 @@ Offers provided to staff members at various businesses are offered solely at the
           title="Directions to closest one"
           onPressButton={onClosestDirectionsClick}
           containerStyle={styles.reminderModalDirectionsButton}
-          titleFontSize={12}
+          titleFontSize={14}
         />
       </Modal>
       <Toast config={toastConfig} />
@@ -503,9 +503,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   reminderModalDirectionsButton: {
-    height: 40,
+    height: 46,
     width: 'auto',
-    paddingHorizontal: 16,
+    paddingHorizontal: 22,
     marginTop: 28,
   },
 });
