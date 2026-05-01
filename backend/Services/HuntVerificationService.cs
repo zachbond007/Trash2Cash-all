@@ -167,7 +167,7 @@ public class HuntVerificationService : IHuntVerificationService
                 hunt.Status = "COMPLETED";
                 hunt.EarnedXP = 0;
                 hunt.VerifiedAs = "NO_TRASH_THROWN";
-                _notificationService.SendNotification(huntOwner.FcmToken, "Photo Declined 😬", "It wasn’t clear that you were throwing away trash. Make sure you capture this action in your next photo.");
+                await _notificationService.SendNotification(huntOwner.FcmToken, "Photo Declined 😬", "It wasn’t clear that you were throwing away trash. Make sure you capture this action in your next photo.");
             }
             else
             {
@@ -188,11 +188,11 @@ public class HuntVerificationService : IHuntVerificationService
                 if (nextLevelForHuntOwner.RequiredXP < huntOwner.EarnedXP)
                 {
                     huntOwner.CurrentLevel++;
-                    _notificationService.SendNotification(huntOwner.FcmToken, "Level Up 😎", "You leveled up, nice! Check to see what rewards you’ve unlocked");
+                    await _notificationService.SendNotification(huntOwner.FcmToken, "Level Up 😎", "You leveled up, nice! Check to see what rewards you’ve unlocked");
                 }
                 else
                 {
-                    _notificationService.SendNotification(huntOwner.FcmToken, "Trash Verified ✅", "Congratulations, your trash has been verified!");
+                    await _notificationService.SendNotification(huntOwner.FcmToken, "Trash Verified ✅", "Congratulations, your trash has been verified!");
                 }
                 _dbContext.Users.Update(huntOwner);
                 var pointTransactionHuntOwner = new PointTransaction()

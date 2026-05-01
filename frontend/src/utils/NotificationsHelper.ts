@@ -15,6 +15,10 @@ export const requestNotificationPermission = async () => {
     }
     return false;
   } else {
+    if (Number(Platform.Version) < 33) {
+      return true;
+    }
+
     const res = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
     );
@@ -24,6 +28,11 @@ export const requestNotificationPermission = async () => {
 
 export const getFCMToken = async () => {
   try {
+    const hasPermission = await requestNotificationPermission();
+    if (!hasPermission) {
+      return '';
+    }
+
     const isSimulator = await DeviceInfo.isEmulator();
     if (Platform.OS == 'ios' && isSimulator) {
       await messaging().setAPNSToken('test');

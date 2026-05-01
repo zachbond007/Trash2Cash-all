@@ -20,33 +20,22 @@ public class NotificationService : INotificationService
 
         try
         {
-            var message = new Message()
+            var message = new Message
             {
                 Token = fcmToken,
-                Notification = new Notification()
+                Notification = new Notification
                 {
                     Title = title,
                     Body = body,
-                },
-                Android = new AndroidConfig()
-                {
-                    Priority = Priority.High,
-                    Notification = new AndroidNotification()
-                    {
-                        ChannelId = "high-priority",
-                     }
-                },
-                Apns = new ApnsConfig()
-                {
-                    Aps = new Aps() { Sound = "default" }
                 }
-             };
+            };
 
-            await FirebaseMessaging.DefaultInstance.SendAsync(message);
+            var messageId = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+            Console.WriteLine($"[NOTIFY] Sent messageId={messageId}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Failed to send notification: {ex.Message}");
+            Console.WriteLine($"Failed to send notification: {ex}");
         }
     }
 }

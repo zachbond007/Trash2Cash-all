@@ -152,12 +152,12 @@ public class HuntService : IHuntService
                 if (level != null && level.RequiredXP <= user.EarnedXP)
                 {
                     user.CurrentLevel++;
-                    _notificationService.SendNotification(user.FcmToken, "Level Up 😎", "You leveled up, nice! Check to see what rewards you’ve unlocked");
+                    await _notificationService.SendNotification(user.FcmToken, "Level Up 😎", "You leveled up, nice! Check to see what rewards you’ve unlocked");
 
                 }
                 else
                 {
-                    _notificationService.SendNotification(user.FcmToken, "Trash Verified ✅", "Congratulations, your trash has been verified!");
+                    await _notificationService.SendNotification(user.FcmToken, "Trash Verified ✅", "Congratulations, your trash has been verified!");
                 }
 
                 _dbContext.Users.Update(user);
@@ -173,7 +173,7 @@ public class HuntService : IHuntService
             }
             else
             {
-                _notificationService.SendNotification(user.FcmToken, "Photo Declined 😬", "It wasn’t clear that you were throwing away trash. Make sure you capture this action in your next photo.");
+                await _notificationService.SendNotification(user.FcmToken, "Photo Declined 😬", "It wasn’t clear that you were throwing away trash. Make sure you capture this action in your next photo.");
             }
             _dbContext.Hunts.Update(hunt);
             _dbContext.SaveChanges();
