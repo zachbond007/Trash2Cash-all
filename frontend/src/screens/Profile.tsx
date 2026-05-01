@@ -3,12 +3,12 @@ import React, {useEffect, useState} from 'react';
 import Text from '../components/Text';
 import CloseIcon from '../assets/icons/close.png';
 import SettingsIcon from '../assets/icons/settings.png';
-import EditIcon from '../assets/icons/edit.png';
 import UserIcon from '../assets/icons/user.png';
 import CalendarIcon from '../assets/icons/calendar.png';
 import LevelCardIcon from '../assets/icons/level.png';
 import IconButton from '../components/IconButton';
 import Icon from '../components/Icon';
+import Button from '../components/Button';
 import Colors from '../assets/Colors';
 import {screenWidth} from '../utils/UIHelper';
 import InfoCard from '../components/InfoCard';
@@ -85,10 +85,12 @@ const Profile = () => {
               <Text fontSize={18} fontWeight="600">
                 {user?.name}
               </Text>
-              <IconButton
-                icon={EditIcon}
+              <Button
+                title="Edit Profile"
                 onPressButton={() => navigation.navigate('EditProfile')}
-                iconStyle={styles.editIcon}
+                titleFontSize={12}
+                wrapperStyle={styles.editProfileButtonWrapper}
+                containerStyle={styles.editProfileButton}
               />
             </View>
             <View style={styles.userDetails}>
@@ -237,10 +239,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  editIcon: {
-    height: 20,
-    width: 20,
-    marginLeft: 8,
+  editProfileButtonWrapper: {
+    marginLeft: 10,
+  },
+  editProfileButton: {
+    height: 28,
+    width: 96,
   },
   userDetails: {
     flexDirection: 'row',

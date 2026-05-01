@@ -34,7 +34,11 @@ const User = ({
   const navigation =
     useNavigation<NativeStackNavigationProp<MainStackParams>>();
   const {isTutorial} = useAppSelector(state => state.app);
-  const avatarUri = isSocialUser || isTutorial ? avatar : s3BaseUrl + avatar;
+  const avatarUri = isSocialUser || isTutorial
+    ? avatar
+    : avatar
+    ? `${s3BaseUrl}${avatar}?v=${encodeURIComponent(String(avatar))}`
+    : '';
   const userImageStyle = isHuntOwner ? styles.smallUserImage : styles.userImage;
   const _avatar = !isTutorial
     ? avatarUri === null ||

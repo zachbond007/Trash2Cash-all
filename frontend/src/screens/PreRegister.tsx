@@ -58,10 +58,21 @@ const PreRegister = () => {
   }, []);
 
   const signInGoogle = async () => {
-    const result = await GoogleSignin.signIn();
-    const googleCredential = auth.GoogleAuthProvider.credential(result.idToken);
-    const cred = await auth().signInWithCredential(googleCredential);
-    await postSocialSignIn(cred);
+    try {
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+      const result = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(
+        result.idToken,
+      );
+      const cred = await auth().signInWithCredential(googleCredential);
+      await postSocialSignIn(cred);
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Google sign-in failed',
+        text2: error?.message ?? 'Please try again.',
+      });
+    }
   };
 
   const signInFacebook = async () => {
@@ -113,19 +124,30 @@ const PreRegister = () => {
     resp: FirebaseAuthTypes.UserCredential,
     isAppleSignin = false,
   ) => {
-    const response = await signinWithSocial({
-      email: resp.user.email!,
-      name: isAppleSignin
-        ? removeEmailRest(resp.user.email!)
-        : resp.user.displayName!,
-      avatar: resp.user.photoURL!,
-      uid: resp.user.uid,
-    });
-    await requestNotificationPermission();
-    dispatch(setUser(response));
-    dispatch(setLoggedIn('FROM_REGISTER'));
-    await AsyncStorage.setItem('jwtToken', response.jwtToken);
-    await AsyncStorage.setItem('email', resp.user.email!);
+    try {
+      const response = await signinWithSocial({
+        email: resp.user.email!,
+        name: isAppleSignin
+          ? removeEmailRest(resp.user.email!)
+          : resp.user.displayName ?? removeEmailRest(resp.user.email!),
+        avatar: resp.user.photoURL ?? '',
+        uid: resp.user.uid,
+      });
+      if (!response?.jwtToken) {
+        throw new Error('Social sign-in returned no token');
+      }
+      await requestNotificationPermission();
+      dispatch(setUser(response));
+      dispatch(setLoggedIn('FROM_REGISTER'));
+      await AsyncStorage.setItem('jwtToken', response.jwtToken);
+      await AsyncStorage.setItem('email', resp.user.email!);
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Sign-in failed',
+        text2: error?.message ?? 'Please try again.',
+      });
+    }
   };
   const onContinueWithSocialButtonClick = (type: SocialButton) => {
     switch (type) {

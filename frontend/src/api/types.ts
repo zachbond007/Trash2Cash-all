@@ -89,6 +89,7 @@ export type ResetPasswordRequest = {
 export type UpdateUserRequest = {
   name: string;
   username: string;
+  avatar?: string;
 };
 
 export type CreateHuntRequest = {

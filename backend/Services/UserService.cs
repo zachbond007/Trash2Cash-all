@@ -399,6 +399,10 @@ public class UserService : IUserService
         var _user = _dbContext.Users.Find(user.Id);
         _user.Name = req.Name;
         _user.Username = req.Username;
+        if (!string.IsNullOrEmpty(req.Avatar))
+        {
+            _user.ImageKey = req.Avatar;
+        }
         _dbContext.Users.Update(_user);
         _dbContext.SaveChanges();
         return _user;

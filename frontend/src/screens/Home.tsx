@@ -11,7 +11,6 @@ import {RNCamera, TakePictureOptions} from 'react-native-camera';
 import {screenHeight, screenWidth} from '../utils/UIHelper';
 import Colors from '../assets/Colors';
 import FocusFrameIcon from '../assets/icons/focus_frame.png';
-import CameraSwitchIcon from '../assets/icons/camera_switch.png';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {timingAnimation} from '../utils/AnimationHelper';
 import GradientOverlay from '../components/GradientOverlay';
@@ -27,8 +26,7 @@ import {checkCameraPermissions} from '../utils/LocationHelper';
 
 const Home = () => {
   const insets = useSafeAreaInsets();
-  const [cameraMode, setCameraMode] = useState<'front' | 'back'>('back');
-  const [flashMode, setFlashMode] = useState<FlashModes>('off');
+  const [flashMode, setFlashMode] = useState<FlashModes>('auto');
   const [takenPicture, setTakenPicture] = useState('');
   const [tempPicture, setTempPicture] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
@@ -48,13 +46,6 @@ const Home = () => {
     };
     checkCamera();
   }, []);
-  const switchCamera = () => {
-    if (cameraMode === 'front') {
-      setCameraMode('back');
-    } else {
-      setCameraMode('front');
-    }
-  };
   const takePicture = async () => {
     if (cameraRef.current) {
       setIsAnimating(true);
@@ -119,7 +110,7 @@ const Home = () => {
         captureAudio={false}
         flashMode={flashMode}
         style={styles.camera}
-        type={cameraMode}
+        type={RNCamera.Constants.Type.back}
         ref={cameraRef}
       />
       {tempPicture !== '' && (
@@ -182,18 +173,6 @@ const Home = () => {
               activeOpacity={0.5}
               style={styles.captureButtonWrapper}>
               <View style={styles.captureButtonBorder} />
-            </TouchableOpacity>
-          )}
-          {cameraPermission && (
-            <TouchableOpacity
-              disabled={isAnimating}
-              style={styles.cameraSwitchButton}
-              onPress={switchCamera}>
-              <Image
-                source={CameraSwitchIcon}
-                style={styles.cameraSwitchIcon}
-                resizeMode="contain"
-              />
             </TouchableOpacity>
           )}
         </View>
@@ -284,13 +263,5 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     opacity: 0.3,
     zIndex: 2,
-  },
-  cameraSwitchButton: {
-    position: 'absolute',
-    right: 16,
-  },
-  cameraSwitchIcon: {
-    height: 32,
-    width: 32,
   },
 });

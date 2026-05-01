@@ -76,6 +76,9 @@ const appSlice = createSlice({
       user!.name = action.payload.name;
       user!.username = action.payload.username;
       user!.birthday = action.payload.birthday;
+      if (action.payload.avatar !== undefined) {
+        user!.avatar = action.payload.avatar;
+      }
     },
     increaseLevelBarPercent: (state, action) => {
       state.levelBarPercent = state.levelBarPercent + action.payload;

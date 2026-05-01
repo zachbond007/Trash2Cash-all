@@ -6,6 +6,7 @@ namespace trash2cash_backend.Models.Users
 
         public string Name { get; set; }
         public string Username { get; set; }
+        public string? Avatar { get; set; }
 
     }
 }
