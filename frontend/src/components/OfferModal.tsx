@@ -77,8 +77,6 @@ const OfferModal = ({
           const _nearestLocations = await getNearestLocations({
             voucherId: selectedVoucher?.voucher?.id,
           });
-          console.log('[Debug] voucherId sent:', selectedVoucher?.voucher?.id);
-          console.log('[Debug] nearestLocations response:', JSON.stringify(_nearestLocations));
           dispatch(setNearestLocations(_nearestLocations ?? []));
           timingAnimation(loaderOpacity, 0, 500, 0, () => {
             setIsLoading(false);
@@ -132,9 +130,27 @@ const OfferModal = ({
       timingAnimation(loaderOpacity, 1, 500);
       Geolocation.getCurrentPosition(
         async res => {
-          const locations = nearestLocations ?? [];
+          const freshLocations =
+            (await getNearestLocations({
+              voucherId: selectedVoucher?.voucher?.id,
+            })) ?? [];
+          const locations =
+            freshLocations.length > 0 ? freshLocations : nearestLocations ?? [];
           const _isInRadius = locations.some(location =>
-            isInRadius(location.lat, location.lng, res.coords.latitude, res.coords.longitude),
+            isInRadius(
+              location.lat,
+              location.lng,
+              res.coords.latitude,
+              res.coords.longitude,
+              res.coords.accuracy,
+            ),
+          );
+          dispatch(setNearestLocations(locations));
+          dispatch(
+            updateNearestLocations({
+              lat: res.coords.latitude,
+              lng: res.coords.longitude,
+            }),
           );
           timingAnimation(loaderOpacity, 0, 500, 0, async () => {
             setIsLoading(false);
@@ -165,7 +181,7 @@ const OfferModal = ({
             setIsReminderModalVisible(true);
           });
         },
-        {timeout: 12000, maximumAge: 30000},
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 0},
       );
 
 

@@ -28,6 +28,14 @@ export const getVouchersByLevel = async (
   return result.data as GetVouchersByLevelResponse;
 };
 
+export const getVouchersByLevelPreview = async (
+  level: number,
+): Promise<GetVouchersByLevelResponse> => {
+  const url = baseUrl + `getVouchersByLevel/${level}`;
+  const result = await get(url);
+  return result.data as GetVouchersByLevelResponse;
+};
+
 export const getLocalVouchersForMarketPlace = async (
   req: GetLocalVouchersForMarketPlaceRequest,
 ): Promise<VoucherData[]> => {

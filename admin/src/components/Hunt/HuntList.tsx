@@ -12,6 +12,13 @@ import { huntStatuses } from "./HuntStatuses";
 import VerifyButton from "./VerifyButton";
 import { verifiedAsOptions } from "./VerifiedAsOptions";
 
+const s3BaseUrl = "https://trash2cash-s3-bucket-1.s3.eu-north-1.amazonaws.com/";
+
+const getHuntImageUrl = (imageKey?: string) => {
+  if (!imageKey) return "";
+  return imageKey.startsWith("http") ? imageKey : `${s3BaseUrl}${imageKey}`;
+};
+
 const HuntList = (props: any) => {
   return (
     <List
@@ -42,15 +49,14 @@ const HuntList = (props: any) => {
         </ReferenceField>
           <FunctionField
           label="Image"
-          render={(v: any) =>
-            v.imageKey ? (
-              <img
-                src={`https://trash2cash-s3-bucket-1.s3.eu-north-1.amazonaws.com/${v.imageKey}`}
-                style={{ maxHeight: 80 }}
-                alt="hunt"
-              />
-            ) : null
-          }
+          render={(v: any) => {
+            const imageUrl = getHuntImageUrl(v.imageKey);
+            return imageUrl ? (
+              <a href={imageUrl} target="_blank" rel="noreferrer">
+                <img src={imageUrl} style={{ maxHeight: 80 }} alt="hunt" />
+              </a>
+            ) : null;
+          }}
         />
         <TextField source="status" />
         <FunctionField

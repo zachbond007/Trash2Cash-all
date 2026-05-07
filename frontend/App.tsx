@@ -11,7 +11,7 @@ import {GOOGLE_API_KEY, IOS_APP_ID, APPFLYER_DEV_KEY} from '@env';
 import messaging from '@react-native-firebase/messaging';
 import notifee, {EventType} from '@notifee/react-native';
 import SplashScreen from 'react-native-splash-screen';
-import {Platform} from 'react-native';
+import {Platform, StatusBar} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 
 if (APPFLYER_DEV_KEY) {
@@ -76,6 +76,11 @@ const App = () => {
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
+      <StatusBar
+        backgroundColor="#fff"
+        barStyle="dark-content"
+        translucent={false}
+      />
       <Provider store={store}>
         <RootNav />
       </Provider>

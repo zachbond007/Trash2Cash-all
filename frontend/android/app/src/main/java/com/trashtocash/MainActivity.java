@@ -1,4 +1,4 @@
-package com.trash2cashapp;
+package com.trash2cash.mobile;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

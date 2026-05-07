@@ -35,9 +35,9 @@ export const getDirections = (address: string) => {
   );
 };
 
-const RADIUS = 535; // radius in meters
+export const VOUCHER_REDEEM_RADIUS_METERS = 535; // 1/3 mile
 
-const getDistanceInMeter = (
+export const getDistanceInMeter = (
   lat1: number,
   lon1: number,
   lat2: number,
@@ -61,13 +61,19 @@ const getDistanceInMeter = (
   return d * 1000; // Distance in meters
 };
 
-export const isInRadius = (lat: number, lng: number, userLat: number, userLng: number): boolean => {
+export const isInRadius = (
+  lat: number,
+  lng: number,
+  userLat: number,
+  userLng: number,
+  accuracy = 0,
+): boolean => {
   const distance = getDistanceInMeter(userLat, userLng, lat, lng);
-  if (distance <= RADIUS) {
-    console.log('You are in the radius');
+  const accuracyBuffer = Math.min(Math.max(accuracy, 0), 150);
+  const allowedDistance = VOUCHER_REDEEM_RADIUS_METERS + accuracyBuffer;
+  if (distance <= allowedDistance) {
     return true;
   }
-  console.log('You are not in the radius');
   return false;
 };
 

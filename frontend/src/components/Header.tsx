@@ -31,7 +31,7 @@ import {
   setUnlockedVouchers,
   updateLevel,
 } from '../redux/slices/appSlice';
-import {getVouchersByLevel} from '../api/voucher';
+import {getVouchersByLevel, getVouchersByLevelPreview} from '../api/voucher';
 import {
   setSelectedCategory,
   setTabBehaviour,
@@ -95,7 +95,9 @@ const Header = ({containerStyle}: HeaderProps) => {
         const isLevelUp = levelBarPercent >= 100;
         if (isLevelUp) {
           if (isTutorial) {
-            dispatch(updateLevel(20));
+            const result = await getVouchersByLevelPreview(user!.level + 1);
+            dispatch(setUnlockedVouchers(result?.vouchers));
+            dispatch(updateLevel(result?.nextLevelRequiredXp ?? 20));
             setIsLevelUpModalVisible(true);
           } else {
             const locPermission = await checkLocationPermissions();
@@ -283,7 +285,7 @@ const Header = ({containerStyle}: HeaderProps) => {
         {unlockedVouchers.length > 0 && (
           <>
             <Text style={styles.voucherListTitle} fontSize={16}>
-              {'Discounts unlocked:'}
+              {`Level ${user!.level} Offers`}
             </Text>
             <FlatList
               data={unlockedVouchers}

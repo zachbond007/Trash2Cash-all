@@ -1,4 +1,4 @@
-package com.trash2cashapp;
+package com.trash2cash.mobile;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

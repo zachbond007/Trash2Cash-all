@@ -7,6 +7,58 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:913857544936:android:587fe65759b24bb7937f5d",
+        "android_client_info": {
+          "package_name": "com.trash2cash.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913857544936-cu21uu5je6i9dpcsab8n20srkidj32dd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trash2cash.mobile",
+            "certificate_hash": "e2ccf79a43b839df4bba6af4c515b2d13297330b"
+          }
+        },
+        {
+          "client_id": "913857544936-rgj30vafkisk1i58j4jf6oqg8u5g7djp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trash2cash.mobile",
+            "certificate_hash": "c553591242c2fae908d146f08ba77c7b5cd480d8"
+          }
+        },
+        {
+          "client_id": "913857544936-cdvsq2649sjh8fjm98rbbfjeufos7gf5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO1q0PUbabG6Puvz7crMuE76_x169F6q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913857544936-cdvsq2649sjh8fjm98rbbfjeufos7gf5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "913857544936-qd51ra3rpms6vs67gfdept0c1asllp8r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.trash2cashapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:913857544936:android:908a0ea9f23358e4937f5d",
         "android_client_info": {
           "package_name": "com.trash2cashapp"
