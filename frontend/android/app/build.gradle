@@ -98,8 +98,8 @@ android {
         applicationId "com.trash2cash.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5
-        versionName "1.0.3"
+        versionCode 7
+        versionName "1.0.5"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
 
@@ -109,6 +109,11 @@ android {
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
             include (*reactNativeArchitectures())
+        }
+    }
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging true
         }
     }
     signingConfigs {
@@ -162,6 +167,7 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
+    implementation 'com.google.android.recaptcha:recaptcha:18.5.1'
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
     implementation "com.facebook.react:react-native:+"  // From node_modules
